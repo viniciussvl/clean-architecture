@@ -1,7 +1,6 @@
 
 export class SignUpController {
     handle(httpRequest: any): any {
-        console.log(httpRequest)
         if(!httpRequest.body.name) {
             return {
                 statusCode: 400,
