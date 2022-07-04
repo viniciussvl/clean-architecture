@@ -1,14 +1,17 @@
-import { AddAccount, AccountModel, AddAccountModel, Encrypter } from './db-add-account-procotols'
+import { AddAccount, AccountModel, AddAccountModel, AddAccountRepository, Encrypter } from './db-add-account-procotols'
 
 export class DbAddAccount implements AddAccount {
     private encrypter: Encrypter
+    private addAccountRepository: AddAccountRepository
 
-    constructor (encrypter: Encrypter) {
+    constructor (encrypter: Encrypter, addAccountRepository: AddAccountRepository) {
         this.encrypter = encrypter
+        this.addAccountRepository = addAccountRepository
     }
 
-    async execute (account: AddAccountModel): Promise<AccountModel> {
-        await this.encrypter.encrypt(account.password)
+    async execute (accountData: AddAccountModel): Promise<AccountModel> {
+        const hashedPassword = await this.encrypter.encrypt(accountData.password)
+        await this.addAccountRepository.execute(Object.assign({}, accountData, { password: hashedPassword }))
         return new Promise(resolve => resolve(null))
     }
 }
