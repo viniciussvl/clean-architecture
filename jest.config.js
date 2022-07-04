@@ -4,5 +4,5 @@ module.exports = {
     coverageProvider: 'v8',
     collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
     testEnvironment: 'node',
-    preset: 'ts-jest'
+    preset: ['ts-jest', '@shelf/jest-mongodb']
 }
