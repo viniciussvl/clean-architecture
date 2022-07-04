@@ -8,5 +8,6 @@ module.exports = {
         instance: {
             dbName: 'jest'
         }
-    }
+    },
+    preset: '@shelf/jest-mongodb'
 }
