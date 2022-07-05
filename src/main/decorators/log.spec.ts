@@ -47,18 +47,20 @@ const makeSut = (): SutTypes => {
     }
 }
 
+const makeFakeRequest = (): HttpRequest => ({
+    body: {
+        email: 'email@email.com',
+        name: 'Developer',
+        password: '123',
+        passwordConfirmation: '123'
+    }
+})
+
 describe('LogController Decorator', () => {
     test('should call controller handle', async () => {
         const { sut, controllerStub } = makeSut()
         const handleSpy = jest.spyOn(controllerStub, 'handle')
-        const httpRequest: HttpRequest = {
-            body: {
-                email: 'email@email.com',
-                name: 'Developer',
-                password: '123',
-                passwordConfirmation: '123'
-            }
-        }
+        const httpRequest = makeFakeRequest()
 
         await sut.handle(httpRequest)
         expect(handleSpy).toHaveBeenCalledWith(httpRequest)
@@ -66,14 +68,7 @@ describe('LogController Decorator', () => {
 
     test('should return the same result of the controller', async () => {
         const { sut } = makeSut()
-        const httpRequest: HttpRequest = {
-            body: {
-                email: 'email@email.com',
-                name: 'Developer',
-                password: '123',
-                passwordConfirmation: '123'
-            }
-        }
+        const httpRequest = makeFakeRequest()
 
         const httpResponse = await sut.handle(httpRequest)
         expect(httpResponse).toEqual({
@@ -93,14 +88,7 @@ describe('LogController Decorator', () => {
         const logSpy = jest.spyOn(logErrorRepositoryStub, 'log')
         jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(new Promise(resolve => resolve(error)))
 
-        const httpRequest: HttpRequest = {
-            body: {
-                email: 'email@email.com',
-                name: 'Developer',
-                password: '123',
-                passwordConfirmation: '123'
-            }
-        }
+        const httpRequest = makeFakeRequest()
 
         await sut.handle(httpRequest)
         expect(logSpy).toHaveBeenCalledWith('any_stack')
