@@ -1,7 +1,9 @@
-import { MongoHelper } from '../helpers/mongo-helper'
-import { AccountRepository } from './account'
+import request from 'supertest'
+import { AccountRepository } from '../../infra/db/mongodb/account-repository/account'
+import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
+import app from '../config/app'
 
-describe('MongoDB: Account Repository', () => {
+describe('Signup Routes', () => {
     beforeAll(async () => {
         await MongoHelper.connect(global.__MONGO_URI__)
     })
@@ -13,6 +15,18 @@ describe('MongoDB: Account Repository', () => {
     beforeEach(async () => {
         const accountCollection = await MongoHelper.getCollection('accounts')
         await accountCollection.deleteMany({})
+    })
+
+    it('should return an account on success', async () => {
+        await request(app)
+            .post('/api/signup')
+            .send({
+                name: 'Vinicius',
+                email: 'vinicius@hotmail.com',
+                password: '123456',
+                passwordConfirmation: '123456'
+            })
+            .expect(200)
     })
 
     test('should return an account on success', async () => {
