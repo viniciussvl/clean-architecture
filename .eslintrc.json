@@ -16,6 +16,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "no-useless-constructor": 0,
         "indent": ["error", 4],
         "keyword-spacing": ["error", { "overrides": {
             "if": { "after": false },

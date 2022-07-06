@@ -1,13 +1,10 @@
 import { AddAccount, AccountModel, AddAccountModel, AddAccountRepository, Hasher } from './db-add-account-procotols'
 
 export class DbAddAccount implements AddAccount {
-    private hasher: Hasher
-    private addAccountRepository: AddAccountRepository
-
-    constructor (hasher: Hasher, addAccountRepository: AddAccountRepository) {
-        this.hasher = hasher
-        this.addAccountRepository = addAccountRepository
-    }
+    constructor (
+        private hasher: Hasher,
+        private addAccountRepository: AddAccountRepository
+    ) {}
 
     async add (accountData: AddAccountModel): Promise<AccountModel> {
         const hashedPassword = await this.hasher.hash(accountData.password)
