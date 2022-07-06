@@ -1,6 +1,6 @@
 import request from 'supertest'
-import { AccountRepository } from '../../infra/db/mongodb/account-repository/account'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
+import { AccountRepository } from '../../infra/db/mongodb/repositories/account/account-repository'
 import app from '../config/app'
 
 describe('Signup Routes', () => {
