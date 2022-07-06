@@ -32,7 +32,7 @@ const makeSut = (): SutTypes => {
 
 const makeAuthentication = (): Authentication => {
     class AuthenticationStub implements Authentication {
-        async auth (email: string, password: string): Promise<string> {
+        async auth (AuthenticationModel): Promise<string> {
             return new Promise(resolve => resolve('any_token'))
         }
     }
@@ -68,7 +68,7 @@ describe('Login Controller', () => {
         const httpRequest = makeFakeRequest()
         await sut.handle(httpRequest)
 
-        expect(authSpy).toHaveBeenCalledWith('valid@email.com', '123')
+        expect(authSpy).toHaveBeenCalledWith({ email: 'valid@email.com', password: '123' })
     })
 
     test('should return 500 if Authentication throws', async () => {
