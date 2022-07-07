@@ -13,7 +13,7 @@ export const adaptRoute = (controller: Controller) => {
             return
         }
 
-        res.status(500).json({
+        res.status(httpResponse.statusCode).json({
             error: httpResponse.body.message
         })
     }
