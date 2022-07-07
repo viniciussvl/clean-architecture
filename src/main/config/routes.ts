@@ -7,7 +7,6 @@ export default (app: Express): void => {
     app.use('/api', router)
 
     const dir = path.join(__dirname, '/../routes')
-    console.log(dir)
 
     readdirSync(dir).map(async file => {
         if(!file.includes('.test.')) {
