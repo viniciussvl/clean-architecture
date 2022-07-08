@@ -22,7 +22,7 @@ describe('MongoDB: Account Repository', () => {
         await surveyCollection.deleteMany({})
     })
 
-    test('should return a survey on add success', async () => {
+    test('should add a survey with success', async () => {
         const sut = makeSut()
         await sut.add({
             question: 'any_question',
