@@ -7,6 +7,6 @@ export const makeDbAddAccount = (): AddAccount => {
     const salt = 12
     const bcryptAdapter = new BcryptAdapter(salt)
     const accountRepository = new AccountRepository()
-    const dbAuthentication = new DbAddAccount(bcryptAdapter, accountRepository)
+    const dbAuthentication = new DbAddAccount(bcryptAdapter, accountRepository, accountRepository)
     return dbAuthentication
 }
