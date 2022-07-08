@@ -3,3 +3,4 @@
 /coverage
 /.vscode
 /data
+!src/data

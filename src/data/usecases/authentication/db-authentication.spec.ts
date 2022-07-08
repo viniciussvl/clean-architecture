@@ -58,6 +58,17 @@ interface SutTypes {
     updateAccessTokenRepositoryStub: UpdateAccessTokenRepository
 }
 
+const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
+    class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
+        async loadByEmail (email: string): Promise<AccountModel> {
+            const account = makeFakeAccount()
+            return new Promise(resolve => resolve(account))
+        }
+    }
+
+    return new LoadAccountByEmailRepositoryStub()
+}
+
 const makeSut = (): SutTypes => {
     const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository()
     const hashComparerStub = makeHashComparer()
@@ -77,17 +88,6 @@ const makeSut = (): SutTypes => {
         encrypterStub,
         updateAccessTokenRepositoryStub
     }
-}
-
-const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
-    class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
-        async loadByEmail (email: string): Promise<AccountModel> {
-            const account = makeFakeAccount()
-            return new Promise(resolve => resolve(account))
-        }
-    }
-
-    return new LoadAccountByEmailRepositoryStub()
 }
 
 describe('DbAuthentication ', () => {
