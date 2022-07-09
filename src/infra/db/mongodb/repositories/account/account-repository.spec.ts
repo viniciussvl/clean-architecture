@@ -110,5 +110,11 @@ describe('MongoDB: Account Repository', () => {
             expect(account.email).toBe('nomesobrenom@hotmail.com')
             expect(account.password).toBe('123')
         })
+
+        test('should return null if loadByToken fails', async () => {
+            const sut = makeSut()
+            const account = await sut.loadByToken('any_token')
+            expect(account).toBeFalsy()
+        })
     })
 })
