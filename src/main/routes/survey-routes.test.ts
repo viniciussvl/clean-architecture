@@ -4,6 +4,7 @@ import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import app from '../config/app'
 
 let surveyCollection: Collection
+let accountCollection: Collection
 
 describe('Survey Routes', () => {
     beforeAll(async () => {
@@ -17,6 +18,9 @@ describe('Survey Routes', () => {
     beforeEach(async () => {
         surveyCollection = await MongoHelper.getCollection('surveys')
         await surveyCollection.deleteMany({})
+
+        accountCollection = await MongoHelper.getCollection('surveys')
+        await accountCollection.deleteMany({})
     })
 
     describe('POST /surveys', () => {

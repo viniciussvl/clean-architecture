@@ -42,7 +42,11 @@ export class AccountRepository implements AddAccountRepository, LoadAccountByEma
         const accountCollection = await MongoHelper.getCollection(this.collection)
         const account = await accountCollection.findOne({
             accessToken: token,
-            role
+            $or: [{
+                role
+            }, {
+                role: 'admin'
+            }]
         })
         return account && MongoHelper.map(account)
     }
