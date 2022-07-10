@@ -34,7 +34,8 @@ describe('MongoDB: Account Repository', () => {
                 {
                     answer: 'owner_answer'
                 }
-            ]
+            ],
+            createdAt: new Date()
         })
 
         const createdSurvey = await surveyCollection.findOne({ question: 'any_question' })

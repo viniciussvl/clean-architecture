@@ -1,5 +1,6 @@
 import { AddSurveyModel, AddSurveyRepository } from './db-add-survey-protocols'
 import { DbAddSurvey } from './db-add-survey'
+import MockDate from 'mockdate'
 
 const makeFakeSurveyData = (): AddSurveyModel => ({
     question: 'any_question',
@@ -8,7 +9,8 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
             image: 'any_image',
             answer: 'any_answer'
         }
-    ]
+    ],
+    createdAt: new Date()
 })
 
 const makeAddSurveyRepository = () => {
@@ -36,6 +38,14 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddSurvey Usecase', () => {
+    beforeAll(() => {
+        MockDate.set(new Date())
+    })
+
+    beforeAll(() => {
+        MockDate.reset()
+    })
+
     test('Should call AddSurveyRepository with correct values', async () => {
         const { sut, addSurveyRepositoryStub } = makeSut()
         const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add')
