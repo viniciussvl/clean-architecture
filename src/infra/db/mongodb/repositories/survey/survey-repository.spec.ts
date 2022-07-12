@@ -22,23 +22,58 @@ describe('MongoDB: Account Repository', () => {
         await surveyCollection.deleteMany({})
     })
 
-    test('should add a survey with success', async () => {
-        const sut = makeSut()
-        await sut.add({
-            question: 'any_question',
-            answers: [
+    describe('add()', () => {
+        test('should add a survey with success', async () => {
+            const sut = makeSut()
+            await sut.add({
+                question: 'any_question',
+                answers: [
+                    {
+                        image: 'any_image',
+                        answer: 'any_answer'
+                    },
+                    {
+                        answer: 'owner_answer'
+                    }
+                ],
+                createdAt: new Date()
+            })
+
+            const createdSurvey = await surveyCollection.findOne({ question: 'any_question' })
+            expect(createdSurvey).toBeTruthy()
+        })
+    })
+
+    describe('loadAll()', () => {
+        test('should loadAll surveys on success', async () => {
+            await surveyCollection.insertMany([
                 {
-                    image: 'any_image',
-                    answer: 'any_answer'
+                    question: 'any_question',
+                    answers: [
+                        {
+                            image: 'any_image',
+                            answer: 'any_answer'
+                        }
+                    ],
+                    createdAt: new Date()
                 },
                 {
-                    answer: 'owner_answer'
+                    question: 'other_question',
+                    answers: [
+                        {
+                            image: 'any_image',
+                            answer: 'any_answer'
+                        }
+                    ],
+                    createdAt: new Date()
                 }
-            ],
-            createdAt: new Date()
-        })
+            ])
 
-        const createdSurvey = await surveyCollection.findOne({ question: 'any_question' })
-        expect(createdSurvey).toBeTruthy()
+            const sut = makeSut()
+            const surveys = await sut.loadAll()
+            expect(surveys.length).toBe(2)
+            expect(surveys[0].question).toBe('any_question')
+            expect(surveys[1].question).toBe('other_question')
+        })
     })
 })
