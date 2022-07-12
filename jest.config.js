@@ -7,5 +7,8 @@ module.exports = {
     collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!<rootDir>/src/main/**', '!<rootDir>/src/**/*-protocols.ts', '!**/protocols/**'],
     // testEnvironment: 'node',
     preset: '@shelf/jest-mongodb',
-    transform: tsjPreset.transform
+    transform: tsjPreset.transform,
+    moduleNameMapper: {
+        '@/(.*)': '<rootDir>/src/$1'
+    }
 }
