@@ -82,4 +82,23 @@ describe('MongoDB: Account Repository', () => {
             expect(surveys.length).toBe(0)
         })
     })
+
+    describe('loadById()', () => {
+        test('should load survey by id on success', async () => {
+            const result: any = await surveyCollection.insertOne({
+                question: 'any_question',
+                answers: [
+                    {
+                        image: 'any_image',
+                        answer: 'any_answer'
+                    }
+                ],
+                createdAt: new Date()
+            })
+
+            const sut = makeSut()
+            const survey = await sut.loadById(result.insertedId)
+            expect(survey).toBeTruthy()
+        })
+    })
 })
