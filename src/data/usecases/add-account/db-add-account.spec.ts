@@ -1,7 +1,7 @@
 import { Hasher, AddAccountModel, AccountModel, AddAccountRepository, LoadAccountByEmailRepository } from './db-add-account-procotols'
 import { DbAddAccount } from './db-add-account'
 
-interface SutTypes {
+type SutTypes = {
     sut: DbAddAccount,
     hasherStub: Hasher,
     addAccountRepositoryStub: AddAccountRepository,
