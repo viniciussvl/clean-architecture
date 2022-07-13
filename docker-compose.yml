@@ -14,6 +14,9 @@ services:
     working_dir: /usr/src/clean-architecture
     restart: always
     command: bash -c "npm install --production --legacy-peer-deps && npm run debug"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/clean-architecture-api
+      - PORT=5050
     volumes:
       - ./dist/:/usr/src/clean-architecture/dist/
       - ./package.json:/usr/src/clean-architecture/package.json
