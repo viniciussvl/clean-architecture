@@ -1,5 +1,5 @@
 import { Collection } from 'mongodb'
-import { AddAccountModel } from '../../../../../domain/usecases/add-account'
+import { AddAccountParams } from '../../../../../domain/usecases/add-account'
 import { MongoHelper } from '../../helpers/mongo-helper'
 import { AccountRepository } from './account-repository'
 
@@ -7,7 +7,7 @@ const makeSut = (): AccountRepository => {
     return new AccountRepository()
 }
 
-const makeFakeAccount = (): AddAccountModel => ({
+const makeFakeAccount = (): AddAccountParams => ({
     name: 'Nome Sobrenome',
     email: 'nomesobrenom@hotmail.com',
     password: '123'

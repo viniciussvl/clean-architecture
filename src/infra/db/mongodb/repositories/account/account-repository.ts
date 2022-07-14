@@ -3,7 +3,7 @@ import { LoadAccountByEmailRepository } from '../../../../../data/protocols/db/a
 import { LoadAccountByTokenRepository } from '../../../../../data/protocols/db/account/load-account-by-token-repository'
 import { UpdateAccessTokenRepository } from '../../../../../data/protocols/db/account/update-access-token-repository'
 import { AccountModel } from '../../../../../domain/models/account'
-import { AddAccountModel } from '../../../../../domain/usecases/add-account'
+import { AddAccountParams } from '../../../../../domain/usecases/add-account'
 import { MongoHelper } from '../../helpers/mongo-helper'
 
 export class AccountRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
@@ -13,7 +13,7 @@ export class AccountRepository implements AddAccountRepository, LoadAccountByEma
         this.collection = 'accounts'
     }
 
-    async add (accountData: AddAccountModel): Promise<AccountModel> {
+    async add (accountData: AddAccountParams): Promise<AccountModel> {
         const accountCollection = await MongoHelper.getCollection(this.collection)
         const result = await accountCollection.insertOne(accountData)
         const { insertedId: id } = result

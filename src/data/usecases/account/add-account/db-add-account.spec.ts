@@ -1,4 +1,4 @@
-import { Hasher, AddAccountModel, AccountModel, AddAccountRepository, LoadAccountByEmailRepository } from './db-add-account-procotols'
+import { Hasher, AddAccountParams, AccountModel, AddAccountRepository, LoadAccountByEmailRepository } from './db-add-account-procotols'
 import { DbAddAccount } from './db-add-account'
 
 type SutTypes = {
@@ -44,7 +44,7 @@ const makeHasher = (): Hasher => {
 
 const makeAddAccountRepository = (): AddAccountRepository => {
     class AddAccountRepositoryStub implements AddAccountRepository {
-        async add (accountData: AddAccountModel): Promise<AccountModel> {
+        async add (accountData: AddAccountParams): Promise<AccountModel> {
             const fakeAccount = makeFakeAccount()
             return new Promise(resolve => resolve(fakeAccount))
         }
@@ -60,7 +60,7 @@ const makeFakeAccount = (): AccountModel => ({
     password: 'hashed_password'
 })
 
-const makeAccountData = (): AddAccountModel => ({
+const makeAccountData = (): AddAccountParams => ({
     name: 'valid_name',
     email: 'valid_email@email.com',
     password: 'valid_password'

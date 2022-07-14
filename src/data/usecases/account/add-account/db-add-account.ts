@@ -1,4 +1,4 @@
-import { AddAccount, AccountModel, AddAccountModel, AddAccountRepository, Hasher, LoadAccountByEmailRepository } from './db-add-account-procotols'
+import { AddAccount, AccountModel, AddAccountParams, AddAccountRepository, Hasher, LoadAccountByEmailRepository } from './db-add-account-procotols'
 
 export class DbAddAccount implements AddAccount {
     constructor (
@@ -7,7 +7,7 @@ export class DbAddAccount implements AddAccount {
         private loadAccountByEmailRepository: LoadAccountByEmailRepository
     ) {}
 
-    async add (accountData: AddAccountModel): Promise<AccountModel> {
+    async add (accountData: AddAccountParams): Promise<AccountModel> {
         const existsAccount = await this.loadAccountByEmailRepository.loadByEmail(accountData.email)
         if(existsAccount) {
             return null

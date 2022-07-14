@@ -32,7 +32,7 @@ const makeSut = (): SutTypes => {
 
 const makeAuthentication = (): Authentication => {
     class AuthenticationStub implements Authentication {
-        async auth (AuthenticationModel): Promise<string> {
+        async auth (AuthenticationParams): Promise<string> {
             return new Promise(resolve => resolve('any_token'))
         }
     }
