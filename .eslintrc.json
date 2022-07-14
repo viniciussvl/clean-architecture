@@ -25,6 +25,7 @@
             "while": { "after": false },
             "static": { "after": false },
             "as": { "after": false }
-        } }]
+        } }],
+        "no-unused-vars": "off"
     }
 }
