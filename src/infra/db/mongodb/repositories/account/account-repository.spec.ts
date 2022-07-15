@@ -1,3 +1,4 @@
+import { mockAccountModel } from '@/domain/test'
 import { Collection } from 'mongodb'
 import { AddAccountParams } from '../../../../../domain/usecases/add-account'
 import { MongoHelper } from '../../helpers/mongo-helper'
@@ -6,12 +7,6 @@ import { AccountRepository } from './account-repository'
 const makeSut = (): AccountRepository => {
     return new AccountRepository()
 }
-
-const makeFakeAccount = (): AddAccountParams => ({
-    name: 'Nome Sobrenome',
-    email: 'nomesobrenom@hotmail.com',
-    password: '123'
-})
 
 let accountCollection: Collection
 
@@ -32,32 +27,32 @@ describe('MongoDB: Account Repository', () => {
     describe('add()', () => {
         test('should return an account on add success', async () => {
             const sut = makeSut()
-            const account = await sut.add(makeFakeAccount())
+            const account = await sut.add(mockAccountModel())
 
             expect(account).toBeTruthy()
             expect(account.id).toBeTruthy()
-            expect(account.name).toBe('Nome Sobrenome')
-            expect(account.email).toBe('nomesobrenom@hotmail.com')
-            expect(account.password).toBe('123')
+            expect(account.name).toBe('any_name')
+            expect(account.email).toBe('any_email@email.com')
+            expect(account.password).toBe('hashed_password')
         })
     })
 
     describe('loadByEmail()', () => {
         test('should return an account on loadByEmail success', async () => {
             const sut = makeSut()
-            await accountCollection.insertOne(makeFakeAccount())
-            const account = await sut.loadByEmail('nomesobrenom@hotmail.com')
+            await accountCollection.insertOne(mockAccountModel())
+            const account = await sut.loadByEmail('any_email@email.com')
 
             expect(account).toBeTruthy()
             expect(account.id).toBeTruthy()
-            expect(account.name).toBe('Nome Sobrenome')
-            expect(account.email).toBe('nomesobrenom@hotmail.com')
-            expect(account.password).toBe('123')
+            expect(account.name).toBe('any_name')
+            expect(account.email).toBe('any_email@email.com')
+            expect(account.password).toBe('hashed_password')
         })
 
         test('should return null if loadyByEmail fails', async () => {
             const sut = makeSut()
-            const account = await sut.loadByEmail('nomesobrenom@hotmail.com')
+            const account = await sut.loadByEmail('any_email@email.com')
             expect(account).toBeFalsy()
         })
     })
@@ -65,8 +60,8 @@ describe('MongoDB: Account Repository', () => {
     describe('updateAccessToken()', () => {
         test('should update the account accessToken on updateAccessToken success', async () => {
             const sut = makeSut()
-            await accountCollection.insertOne(makeFakeAccount())
-            const accountById = await sut.loadByEmail('nomesobrenom@hotmail.com')
+            await accountCollection.insertOne(mockAccountModel())
+            const accountById = await sut.loadByEmail('any_email@email.com')
             await sut.updateAccessToken(accountById.id, 'any_token')
 
             const account = await accountCollection.findOne({ _id: accountById.id })
@@ -79,26 +74,26 @@ describe('MongoDB: Account Repository', () => {
         test('should return an account on loadByToken without role', async () => {
             const sut = makeSut()
             await accountCollection.insertOne({
-                name: 'Nome Sobrenome',
-                email: 'nomesobrenom@hotmail.com',
-                password: '123',
+                name: 'any_name',
+                email: 'any_email@email.com',
+                password: 'hashed_password',
                 accessToken: 'any_token'
             })
             const account = await sut.loadByToken('any_token')
 
             expect(account).toBeTruthy()
             expect(account.id).toBeTruthy()
-            expect(account.name).toBe('Nome Sobrenome')
-            expect(account.email).toBe('nomesobrenom@hotmail.com')
-            expect(account.password).toBe('123')
+            expect(account.name).toBe('any_name')
+            expect(account.email).toBe('any_email@email.com')
+            expect(account.password).toBe('hashed_password')
         })
 
         test('should return an account on loadByToken with role', async () => {
             const sut = makeSut()
             await accountCollection.insertOne({
-                name: 'Nome Sobrenome',
-                email: 'nomesobrenom@hotmail.com',
-                password: '123',
+                name: 'any_name',
+                email: 'any_email@email.com',
+                password: 'hashed_password',
                 accessToken: 'any_token',
                 role: 'any_role'
             })
@@ -106,9 +101,9 @@ describe('MongoDB: Account Repository', () => {
 
             expect(account).toBeTruthy()
             expect(account.id).toBeTruthy()
-            expect(account.name).toBe('Nome Sobrenome')
-            expect(account.email).toBe('nomesobrenom@hotmail.com')
-            expect(account.password).toBe('123')
+            expect(account.name).toBe('any_name')
+            expect(account.email).toBe('any_email@email.com')
+            expect(account.password).toBe('hashed_password')
         })
 
         test('should return null if loadByToken fails', async () => {
